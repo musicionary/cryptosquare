@@ -8,12 +8,14 @@ var numCol;
 var numRow;
 var cryptosquare = [];
 var strippedArray;
+var space = /(\w{5})/gi;
+var encrypted = [];
+var encryptedString;
+var encryptedStringWithSpaces;
 
 //spec: strip sentence of white space, punctuation, and lowercase the string
 var noSpace = function(sentence) {
   stripped = sentence.replace(/\s+/g, "").toLowerCase();
-  // console.log(stripped);
-  // console.log(stripped.length);
   strippedArray = stripped.split("");
   return stripped;
 };
@@ -47,21 +49,18 @@ var createSquare = function(sentence){
 };
 
 //spec: encrypt from the square arrays, concat, join
+var encrypt = function(cryptosquare) {
+  for (var i = 0; i <= numCol; i++) {
+    //enter
+    for(var j = 0; j < numRow; j++) {
+      encrypted.push(cryptosquare[j][i]);
+    }
 
-//spec: re insert whitespace (and punctuation)
-
-
-
-// var encrypt = function(sentence) {
-//
-// }
-
-
-
-
-
-
-
+  }
+  //spec: re insert whitespace (and punctuation)
+  encryptedString = encrypted.join("");
+  encryptedString = encryptedString.replace(space, "$1 ");
+}
 
 
 //--------------//
@@ -73,10 +72,11 @@ $(function() {
 
     var unencrypted = $("#sentence").val();
 
+
     noSpace(unencrypted);
     createSquare(stripped);
-
-    // console.log(column);
-    // console.log(row);
+    encrypt(cryptosquare);
+    
+    $("#output").text(encryptedString);
   });
 });
